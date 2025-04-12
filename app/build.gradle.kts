@@ -72,6 +72,10 @@ dependencies {
     //lottie
     implementation(libs.lottie)
 
+    //exoplayer
+    implementation(libs.exoplayer)
+    implementation(libs.exoplayer.ui)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

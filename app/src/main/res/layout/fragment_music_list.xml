@@ -64,4 +64,12 @@
         android:layout_width="wrap_content"
         layout="@layout/initial_layout"/>
 
+    <include
+        android:visibility="gone"
+        android:id="@+id/layout_music_play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/music_play_layout"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

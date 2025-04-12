@@ -12,11 +12,14 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
 import com.redveloper.music.databinding.FragmentMusicListBinding
 import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
 import com.redveloper.music.util.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MusicListFragment : Fragment() {
@@ -24,6 +27,9 @@ class MusicListFragment : Fragment() {
     private lateinit var binding: FragmentMusicListBinding
     private val viewModel: MusicListViewModel by viewModels()
     private lateinit var adapter: MusicListAdapter
+
+    @Inject
+    lateinit var exoPlayer: ExoPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +53,23 @@ class MusicListFragment : Fragment() {
                 }
         }
 
+        adapter.setOnPlayListener { data ->
+            if (!data.music.isBlank()) {
+                binding.layoutMusicPlay.root.visibility = View.VISIBLE
+                playMusic(data.music)
+            }
+        }
+
+    }
+
+    private fun playMusic(music: String){
+        exoPlayer.apply {
+            clearMediaItems()
+            setMediaItem(MediaItem.fromUri(music))
+            binding.layoutMusicPlay.styledPlayer.player = this
+            prepare()
+            playWhenReady = true
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -87,5 +110,11 @@ class MusicListFragment : Fragment() {
             binding.initialLayout.root.isVisible(
                 data.isEmpty() && binding.etSearch.text.isNullOrBlank())
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(::exoPlayer.isInitialized)
+            exoPlayer.release()
     }
 }
