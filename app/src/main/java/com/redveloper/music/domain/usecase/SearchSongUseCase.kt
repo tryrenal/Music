@@ -18,9 +18,9 @@ class SearchSongUseCase @Inject constructor(
     private val musicRepository: MusicRepository
 ) {
 
-    operator fun invoke(song: Flow<String>): Flow<Resource<List<Music>>>{
-        var result = song.debounce(1000)
-            .distinctUntilChanged()
+    operator fun invoke(query: Flow<String>): Flow<Resource<List<Music>>>{
+        var result = query
+            .debounce(400)
             .filter { it.length > 3 }
             .flatMapLatest { query ->
                 if (query.isNotBlank()){

@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.redveloper.music.databinding.FragmentMusicListBinding
+import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -18,6 +20,7 @@ class MusicListFragment : Fragment() {
 
     private lateinit var binding: FragmentMusicListBinding
     private val viewModel: MusicListViewModel by viewModels()
+    private lateinit var adapter: MusicListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +34,7 @@ class MusicListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = MusicListAdapter()
         binding.etSearch.doAfterTextChanged { query ->
             viewModel.searchSong(query.toString())
         }
@@ -47,12 +51,15 @@ class MusicListFragment : Fragment() {
     private fun setupUI(result: MusicListState) {
         result.error?.let { error ->
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
-            binding.tvTitle.text = error
         }
 
         result.songs.let { data ->
             if(data.isNotEmpty()){
-                binding.tvTitle.text = data.size.toString() + " data"
+                binding.recyclerView.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    adapter = this@MusicListFragment.adapter
+                }
+                adapter.setData(data)
             }
         }
     }
