@@ -6,7 +6,6 @@ import com.redveloper.music.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -18,9 +17,9 @@ class SearchSongUseCase @Inject constructor(
     private val musicRepository: MusicRepository
 ) {
 
-    operator fun invoke(song: Flow<String>): Flow<Resource<List<Music>>>{
-        var result = song.debounce(1000)
-            .distinctUntilChanged()
+    operator fun invoke(query: Flow<String>): Flow<Resource<List<Music>>>{
+        var result = query
+            .debounce(400)
             .filter { it.length > 3 }
             .flatMapLatest { query ->
                 if (query.isNotBlank()){
@@ -38,6 +37,7 @@ class SearchSongUseCase @Inject constructor(
 
     private fun searchSong(query: String): Flow<Resource<List<Music>>>{
         return flow {
+            emit(Resource.Loading(true))
             try{
                 val response = musicRepository.searchMusic(query)
                 emit(Resource.Success(response))
@@ -50,6 +50,9 @@ class SearchSongUseCase @Inject constructor(
             }
             catch (e: Exception){
                 emit(Resource.Error("error: ${e.localizedMessage}"))
+            }
+            finally {
+                emit(Resource.Loading(false))
             }
         }
     }
