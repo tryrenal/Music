@@ -5,24 +5,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.music_list.MusicListFragment">
 
-
-    <EditText
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_search"
+        app:cardBackgroundColor="@color/darkBrown"
         app:layout_constraintTop_toTopOf="parent"
-        android:hint="Search Music"
-        android:id="@+id/etSearch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        tools:text="title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        <EditText
+            android:padding="8dp"
+            android:fontFamily="@font/plusjakarta_regular"
+            android:textColorHint="@color/white"
+            android:drawableTint="@color/white"
+            android:drawableEnd="@drawable/ic_close"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="Search Music"
+            android:id="@+id/etSearch"
+            android:textColor="@color/white"
+            android:background="@drawable/edittext_rounded"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="10dp"
+            android:textSize="13sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSearch"
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/card_search"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
