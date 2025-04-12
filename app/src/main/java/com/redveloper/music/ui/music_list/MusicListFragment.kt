@@ -12,14 +12,19 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import com.redveloper.music.databinding.FragmentMusicListBinding
+import com.redveloper.music.databinding.ItemPlayMusicLayoutBinding
 import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
 import com.redveloper.music.util.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.google.android.exoplayer2.ui.R as ExoPlayerR
 
 @AndroidEntryPoint
 class MusicListFragment : Fragment() {
@@ -45,6 +50,7 @@ class MusicListFragment : Fragment() {
 
         adapter = MusicListAdapter()
         searchAction()
+        setupExoPlayer()
 
         lifecycleScope.launch {
             viewModel.musicState
@@ -57,16 +63,47 @@ class MusicListFragment : Fragment() {
             if (!data.music.isBlank()) {
                 binding.layoutMusicPlay.root.visibility = View.VISIBLE
                 playMusic(data.music)
+
+                binding.layoutMusicPlay.styledPlayer.apply {
+                    val controlBinding = ItemPlayMusicLayoutBinding.bind(findViewById(ExoPlayerR.id.exo_controller))
+
+                    controlBinding.apply {
+                        tvPlay.text = data.collectionName
+                        tvBandName.text = data.artisName
+
+                        Glide.with(controlBinding.root)
+                            .load(data.coverArt)
+                            .into(imgPlay)
+                    }
+                }
             }
         }
 
+    }
+
+    private fun setupExoPlayer(){
+        binding.layoutMusicPlay.styledPlayer.apply {
+            player = exoPlayer
+            setShowNextButton(true)
+            setShowPreviousButton(true)
+
+            controllerAutoShow = true
+            controllerHideOnTouch = false
+
+            showController()
+            setControllerVisibilityListener(object : StyledPlayerControlView.VisibilityListener{
+                override fun onVisibilityChange(visibility: Int) {
+                    if (visibility != View.VISIBLE)
+                        showController()
+                }
+            })
+        }
     }
 
     private fun playMusic(music: String){
         exoPlayer.apply {
             clearMediaItems()
             setMediaItem(MediaItem.fromUri(music))
-            binding.layoutMusicPlay.styledPlayer.player = this
             prepare()
             playWhenReady = true
         }
