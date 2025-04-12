@@ -16,7 +16,6 @@ class MusicRepositoryImpl @Inject constructor(
             limit = Constant.LIMIT_MUSIC,
             term = song
         )
-        val data = response.results?.map { it.toMusic() }
-        return data ?: emptyList()
+        return  response.results.map { it.toMusic() }
     }
 }
