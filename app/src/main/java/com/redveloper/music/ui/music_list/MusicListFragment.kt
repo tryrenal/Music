@@ -2,13 +2,13 @@ package com.redveloper.music.ui.music_list
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +17,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerControlView
+import com.redveloper.music.R
 import com.redveloper.music.databinding.FragmentMusicListBinding
 import com.redveloper.music.databinding.ItemPlayMusicLayoutBinding
 import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
@@ -30,6 +31,8 @@ import com.google.android.exoplayer2.ui.R as ExoPlayerR
 class MusicListFragment : Fragment() {
 
     private lateinit var binding: FragmentMusicListBinding
+    private lateinit var controlExoBinding: ItemPlayMusicLayoutBinding
+
     private val viewModel: MusicListViewModel by viewModels()
     private lateinit var adapter: MusicListAdapter
 
@@ -42,6 +45,9 @@ class MusicListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMusicListBinding.inflate(inflater, container, false)
+        binding.layoutMusicPlay.styledPlayer.apply {
+            controlExoBinding = ItemPlayMusicLayoutBinding.bind(findViewById(ExoPlayerR.id.exo_controller))
+        }
         return binding.root
     }
 
@@ -51,6 +57,7 @@ class MusicListFragment : Fragment() {
         adapter = MusicListAdapter()
         searchAction()
         setupExoPlayer()
+        exoListener()
 
         lifecycleScope.launch {
             viewModel.musicState
@@ -65,13 +72,11 @@ class MusicListFragment : Fragment() {
                 playMusic(data.music)
 
                 binding.layoutMusicPlay.styledPlayer.apply {
-                    val controlBinding = ItemPlayMusicLayoutBinding.bind(findViewById(ExoPlayerR.id.exo_controller))
-
-                    controlBinding.apply {
+                    controlExoBinding.apply {
                         tvPlay.text = data.collectionName
                         tvBandName.text = data.artisName
 
-                        Glide.with(controlBinding.root)
+                        Glide.with(controlExoBinding.root)
                             .load(data.coverArt)
                             .into(imgPlay)
                     }
@@ -99,6 +104,30 @@ class MusicListFragment : Fragment() {
             })
         }
     }
+
+    private fun exoListener(){
+        exoPlayer.addListener(object: Player.Listener{
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                controlExoBinding.exoPlay.setImageResource(
+                    if (exoPlayer.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+                )
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                controlExoBinding.exoPlay.setImageResource(
+                    if (exoPlayer.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+                )
+            }
+        })
+
+        controlExoBinding.exoPlay.setOnClickListener {
+            if (exoPlayer.isPlaying)
+                exoPlayer.pause()
+            else
+                exoPlayer.play()
+        }
+    }
+
 
     private fun playMusic(music: String){
         exoPlayer.apply {
