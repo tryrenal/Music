@@ -8,6 +8,7 @@
     <color name="background">#121212</color>
     <color name="grey">#a2a2a3</color>
     <color name="brown">#542019</color>
+    <color name="brown50">#80542019</color>
     <color name="darkGrey">#353434</color>
     <color name="darkBrown">#1f1e1e</color>
 </resources>
