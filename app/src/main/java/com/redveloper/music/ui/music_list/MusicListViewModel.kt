@@ -22,9 +22,16 @@ class MusicListViewModel @Inject constructor(
     private val _musicState = MutableStateFlow<MusicListState>(MusicListState())
     val musicState: StateFlow<MusicListState> = _musicState.asStateFlow()
 
-    fun searchSong(query: String){
-        _searchQuery.value = query
+    fun clearSearch(){
         viewModelScope.launch {
+            _searchQuery.value = ""
+            _musicState.update { it.copy(isLoading = false, songs = emptyList(), error = null) }
+        }
+    }
+
+    fun searchSong(query: String){
+        viewModelScope.launch {
+            _searchQuery.value = query
             searchSongUseCase.invoke(_searchQuery)
                 .collect { result ->
                     when(result){
@@ -41,6 +48,13 @@ class MusicListViewModel @Inject constructor(
                                 songs = emptyList(),
                                 error = result.message
                             ) }
+                        }
+                        is Resource.Loading -> {
+                            _musicState.update {
+                                it.copy(
+                                    isLoading = result.isLoading
+                                )
+                            }
                         }
                     }
                 }
