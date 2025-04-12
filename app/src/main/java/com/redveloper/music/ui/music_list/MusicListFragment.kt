@@ -1,8 +1,10 @@
 package com.redveloper.music.ui.music_list
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.redveloper.music.databinding.FragmentMusicListBinding
 import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
+import com.redveloper.music.util.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,9 +38,7 @@ class MusicListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = MusicListAdapter()
-        binding.etSearch.doAfterTextChanged { query ->
-            viewModel.searchSong(query.toString())
-        }
+        searchAction()
 
         lifecycleScope.launch {
             viewModel.musicState
@@ -48,19 +49,43 @@ class MusicListFragment : Fragment() {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun searchAction(){
+        binding.etSearch.doAfterTextChanged { query ->
+            if(!query.isNullOrBlank()){
+                viewModel.searchSong(query.toString())
+            }
+        }
+
+        binding.etSearch.setOnTouchListener { v, event ->
+            if(event.action == MotionEvent.ACTION_UP){
+                val drawableEnd = binding.etSearch.compoundDrawablesRelative[2]
+
+                if(drawableEnd != null && event.rawX >= (binding.etSearch.right - drawableEnd.bounds.width() - binding.etSearch.paddingEnd)){
+                    viewModel.clearSearch()
+                    binding.etSearch.text.clear()
+                    return@setOnTouchListener true
+                }
+            }
+
+            false
+        }
+    }
+
     private fun setupUI(result: MusicListState) {
         result.error?.let { error ->
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
 
         result.songs.let { data ->
-            if(data.isNotEmpty()){
-                binding.recyclerView.apply {
-                    layoutManager = LinearLayoutManager(requireContext())
-                    adapter = this@MusicListFragment.adapter
-                }
-                adapter.setData(data)
+            binding.recyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = this@MusicListFragment.adapter
             }
+            adapter.setData(data)
+
+            binding.initialLayout.root.isVisible(
+                data.isEmpty() && binding.etSearch.text.isNullOrBlank())
         }
     }
 }

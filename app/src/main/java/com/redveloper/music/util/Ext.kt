@@ -1,6 +1,7 @@
 package com.redveloper.music.util
 
 import android.content.Context
+import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.redveloper.music.R
@@ -24,4 +25,11 @@ fun TextView.textIsActive(context: Context, active: Boolean){
 
 fun getGroupName(name: String): String{
     return "Song-$name"
+}
+
+fun View.isVisible(show: Boolean){
+    if(show)
+        this.visibility = View.VISIBLE
+    else
+        this.visibility = View.GONE
 }
