@@ -9,6 +9,11 @@ import com.redveloper.music.domain.model.Music
 class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
 
     private val _data: MutableList<Music> = mutableListOf()
+    private var playListener: ((data: Music) -> Unit)? = null
+
+    fun setOnPlayListener(listener: (data: Music) -> Unit){
+        this.playListener = listener
+    }
 
     fun setData(data: List<Music>){
         this._data.clear()
@@ -30,6 +35,10 @@ class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
         position: Int
     ) {
         holder.bind(_data[position])
+
+        holder.binding.root.setOnClickListener {
+            playListener?.invoke(_data[position])
+        }
     }
 
     override fun getItemCount(): Int {
