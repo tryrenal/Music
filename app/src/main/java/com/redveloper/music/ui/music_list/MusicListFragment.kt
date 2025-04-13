@@ -2,28 +2,45 @@ package com.redveloper.music.ui.music_list
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.StyledPlayerControlView
+import com.redveloper.music.R
 import com.redveloper.music.databinding.FragmentMusicListBinding
+import com.redveloper.music.databinding.ItemPlayMusicLayoutBinding
+import com.redveloper.music.domain.model.Music
 import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
 import com.redveloper.music.util.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import com.google.android.exoplayer2.ui.R as ExoPlayerR
 
 @AndroidEntryPoint
 class MusicListFragment : Fragment() {
 
     private lateinit var binding: FragmentMusicListBinding
+    private lateinit var controlExoBinding: ItemPlayMusicLayoutBinding
+
     private val viewModel: MusicListViewModel by viewModels()
     private lateinit var adapter: MusicListAdapter
+
+    private var currentPosition = -1
+
+    @Inject
+    lateinit var exoPlayer: ExoPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +48,9 @@ class MusicListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMusicListBinding.inflate(inflater, container, false)
+        binding.layoutMusicPlay.styledPlayer.apply {
+            controlExoBinding = ItemPlayMusicLayoutBinding.bind(findViewById(ExoPlayerR.id.exo_controller))
+        }
         return binding.root
     }
 
@@ -39,6 +59,7 @@ class MusicListFragment : Fragment() {
 
         adapter = MusicListAdapter()
         searchAction()
+        setupExoPlayer()
 
         lifecycleScope.launch {
             viewModel.musicState
@@ -47,6 +68,112 @@ class MusicListFragment : Fragment() {
                 }
         }
 
+        adapter.setOnPlayListener { data, position ->
+            if (!data.music.isBlank()) {
+                currentPosition = position
+                updateUIMusicPlay(data)
+            }
+        }
+    }
+
+    private fun updateUIMusicPlay(data: Music){
+        binding.layoutMusicPlay.root.visibility = View.VISIBLE
+        playMusic(data.music)
+        binding.layoutMusicPlay.styledPlayer.apply {
+            controlExoBinding.apply {
+                tvPlay.text = data.collectionName
+                tvBandName.text = data.artisName
+
+                Glide.with(controlExoBinding.root)
+                    .load(data.coverArt)
+                    .into(imgPlay)
+            }
+        }
+
+        exoListener()
+    }
+
+    private fun setupExoPlayer(){
+        binding.layoutMusicPlay.styledPlayer.apply {
+            player = exoPlayer
+            setShowNextButton(true)
+            setShowPreviousButton(true)
+
+            useController = true
+            controllerAutoShow = true
+            controllerHideOnTouch = false
+        }
+    }
+
+    private fun exoListener(){
+        exoPlayer.addListener(object: Player.Listener{
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                controlExoBinding.exoPlay.setImageResource(
+                    if (exoPlayer.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+                )
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                controlExoBinding.exoPlay.setImageResource(
+                    if (exoPlayer.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+                )
+            }
+
+            override fun onEvents(player: Player, events: Player.Events) {
+                super.onEvents(player, events)
+                exoListenerPrevNext()
+            }
+        })
+
+        controlExoBinding.exoPlay.setOnClickListener {
+            if (exoPlayer.isPlaying)
+                exoPlayer.pause()
+            else
+                exoPlayer.play()
+        }
+
+        binding.layoutMusicPlay.styledPlayer.apply {
+            showController()
+            setControllerVisibilityListener(object : StyledPlayerControlView.VisibilityListener{
+                override fun onVisibilityChange(visibility: Int) {
+                    if(visibility == View.VISIBLE){
+                        showController()
+                        exoListenerPrevNext()
+                    } else {
+                        showController()
+                    }
+                }
+            })
+        }
+
+        exoListenerPrevNext()
+    }
+
+    private fun exoListenerPrevNext(){
+        controlExoBinding.exoNext.apply {
+            isEnabled = true
+            alpha = 1f
+            setOnClickListener {
+                adapter.playNext(currentPosition)
+            }
+        }
+
+        controlExoBinding.exoPrev.apply {
+            isEnabled = true
+            alpha = 1f
+            setOnClickListener {
+                adapter.playPrev(currentPosition)
+            }
+        }
+    }
+
+    private fun playMusic(music: String){
+        exoPlayer.apply {
+            clearMediaItems()
+            setMediaItem(MediaItem.fromUri(music))
+            prepare()
+            playWhenReady = true
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -87,5 +214,11 @@ class MusicListFragment : Fragment() {
             binding.initialLayout.root.isVisible(
                 data.isEmpty() && binding.etSearch.text.isNullOrBlank())
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(::exoPlayer.isInitialized)
+            exoPlayer.release()
     }
 }
