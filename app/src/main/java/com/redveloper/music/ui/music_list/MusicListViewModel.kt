@@ -3,7 +3,7 @@ package com.redveloper.music.ui.music_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.redveloper.music.domain.usecase.SearchSongUseCase
-import com.redveloper.music.util.Resource
+import com.redveloper.music.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

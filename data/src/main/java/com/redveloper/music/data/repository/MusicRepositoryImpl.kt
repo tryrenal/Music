@@ -2,9 +2,9 @@ package com.redveloper.music.data.repository
 
 import com.redveloper.music.data.ApiService
 import com.redveloper.music.data.mapper.toMusic
+import com.redveloper.music.data.util.Constant
 import com.redveloper.music.domain.model.Music
 import com.redveloper.music.domain.repository.MusicRepository
-import com.redveloper.music.util.Constant
 import javax.inject.Inject
 
 class MusicRepositoryImpl @Inject constructor(

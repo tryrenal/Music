@@ -1,4 +1,4 @@
-package com.redveloper.music.di
+package com.redveloper.music.data.di
 
 import com.redveloper.music.data.ApiService
 import dagger.Module
@@ -12,7 +12,7 @@ import retrofit2.Retrofit
 object ApiModule {
 
     @Provides
-    fun provideApi(retrofit: Retrofit): ApiService{
+    fun provideApi(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 }
