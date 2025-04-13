@@ -32,7 +32,13 @@
             android:textSize="14sp"
             android:fontFamily="@font/plusjakarta_semibold"
             tools:text="Viva la vida"
-            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/exo_prev"
+            android:textAlignment="textStart"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
         <TextView
