@@ -16,13 +16,15 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:singleLine="true"
+            android:maxLines="1"
             android:padding="8dp"
             android:fontFamily="@font/plusjakarta_regular"
             android:textColorHint="@color/white60"
             android:drawableTint="@color/white"
             android:drawableEnd="@drawable/ic_close"
             app:layout_constraintTop_toTopOf="parent"
-            android:hint="Search Music"
+            android:hint="@string/search"
             android:id="@+id/etSearch"
             android:textColor="@color/white"
             android:background="@drawable/edittext_rounded"

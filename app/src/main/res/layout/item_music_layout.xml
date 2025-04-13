@@ -30,6 +30,12 @@
         app:layout_constraintTop_toTopOf="@id/img_play"
         tools:text="Viva la vida"
         android:layout_width="0dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_play"
+        android:textAlignment="textStart"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:fontFamily="@font/plusjakarta_bold"
         android:textSize="16sp"
         android:layout_height="wrap_content"/>
@@ -53,7 +59,8 @@
         app:layout_constraintTop_toTopOf="@id/img_play"
         android:src="@drawable/ic_add_circle"
         android:id="@+id/btn_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:scaleType="fitCenter"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

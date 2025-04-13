@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="25sp"
         android:textColor="@color/white"
-        android:text="Cari Musik terbaikmu!"
+        android:text="@string/text_initial_title"
         android:fontFamily="@font/plusjakarta_semibold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -27,7 +27,7 @@
         android:fontFamily="@font/plusjakarta_regular"
         app:layout_constraintTop_toBottomOf="@id/tv_initial_music"
         android:textAlignment="center"
-        android:text="music tidak dapat menyembuhkanmu tapi musik akan selalu ada kapanpun kamu butuh"
+        android:text="@string/text_initial_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

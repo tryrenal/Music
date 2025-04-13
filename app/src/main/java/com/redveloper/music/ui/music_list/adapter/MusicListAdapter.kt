@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.redveloper.music.databinding.ItemMusicLayoutBinding
 import com.redveloper.music.domain.model.Music
+import com.redveloper.music.util.textIsActive
 
 class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
 
     private val _data: MutableList<Music> = mutableListOf()
     private var playListener: ((data: Music, position: Int) -> Unit)? = null
+    private var selectedPosition = -1
 
     fun setOnPlayListener(listener: (data: Music, position: Int) -> Unit){
         this.playListener = listener
@@ -32,12 +34,14 @@ class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
     fun playNext(position: Int){
         getNextData(position)?.let {
             playListener?.invoke(it, position + 1)
+            changeIconSelectedItem(position + 1)
         }
     }
 
     fun playPrev(position: Int){
         getPrevData(position)?.let {
             playListener?.invoke(it, position - 1)
+            changeIconSelectedItem(position - 1)
         }
     }
 
@@ -61,6 +65,15 @@ class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun changeIconSelectedItem(position: Int){
+        if(selectedPosition != -1 && selectedPosition != position){
+            notifyItemChanged(selectedPosition)
+        }
+
+        selectedPosition = position
+        notifyItemChanged(position)
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -76,7 +89,17 @@ class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
     ) {
         holder.bind(_data[position])
 
+        if(position == selectedPosition)
+            holder.setIconToPlay()
+        else
+            holder.resetIcon()
+
+        holder.binding.tvTitle.textIsActive(
+            context = holder.binding.root.context,
+            active = position == selectedPosition)
+
         holder.binding.root.setOnClickListener {
+            changeIconSelectedItem(position)
             playListener?.invoke(_data[position], position)
         }
     }
