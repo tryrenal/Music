@@ -1,4 +1,4 @@
-package com.redveloper.music.util
+package com.redveloper.music.data.util
 
 object Constant {
     const val LIMIT_MUSIC = 50

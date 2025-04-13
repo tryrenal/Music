@@ -1,8 +1,8 @@
-package com.redveloper.music.di
+package com.redveloper.music.data.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.redveloper.music.util.Constant
+import com.redveloper.music.data.util.Constant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp(context: Context): OkHttpClient{
+    fun provideOkHttp(context: Context): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(ChuckerInterceptor.Builder(context).build())
             .readTimeout(Constant.READ_TIME, TimeUnit.SECONDS)
@@ -33,7 +33,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit{
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
             .client(okHttpClient)
