@@ -21,6 +21,7 @@ import com.redveloper.music.R
 import com.redveloper.music.databinding.FragmentMusicListBinding
 import com.redveloper.music.databinding.ItemPlayMusicLayoutBinding
 import com.redveloper.music.domain.model.Music
+import com.redveloper.music.ui.component.ConfirmationBottomSheet
 import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
 import com.redveloper.music.util.isVisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -201,7 +202,9 @@ class MusicListFragment : Fragment() {
 
     private fun setupUI(result: MusicListState) {
         result.error?.let { error ->
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            ConfirmationBottomSheet
+                .create(error)
+                .show(childFragmentManager, "error bs")
         }
 
         result.songs.let { data ->
