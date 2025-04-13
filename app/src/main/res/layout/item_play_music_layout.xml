@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"/>
 
         <ImageButton
-            android:id="@+id/exo_next"
+            android:id="@id/exo_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -55,6 +55,9 @@
             android:background="?android:selectableItemBackground"
             android:layout_width="30dp"
             app:tint="@color/white"
+            android:enabled="true"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_height="30dp"/>
 
         <ImageButton
@@ -71,7 +74,7 @@
 
         <ImageButton
             android:layout_marginEnd="15dp"
-            android:id="@+id/exo_prev"
+            android:id="@id/exo_prev"
             app:layout_constraintEnd_toStartOf="@id/exo_play"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -79,6 +82,9 @@
             android:background="?android:selectableItemBackground"
             android:layout_width="30dp"
             app:tint="@color/white"
+            android:enabled="true"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_height="30dp"/>
 
 

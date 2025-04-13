@@ -9,10 +9,50 @@ import com.redveloper.music.domain.model.Music
 class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
 
     private val _data: MutableList<Music> = mutableListOf()
-    private var playListener: ((data: Music) -> Unit)? = null
+    private var playListener: ((data: Music, position: Int) -> Unit)? = null
 
-    fun setOnPlayListener(listener: (data: Music) -> Unit){
+    fun setOnPlayListener(listener: (data: Music, position: Int) -> Unit){
         this.playListener = listener
+    }
+
+    private fun getNextData(currentPosition: Int): Music? {
+        val nextPosition = currentPosition + 1
+        try {
+            if(nextPosition < _data.size){
+                val nextData = _data[nextPosition]
+                return nextData
+            }
+            return null
+        }
+        catch (e: Exception){
+            return null
+        }
+    }
+
+    fun playNext(position: Int){
+        getNextData(position)?.let {
+            playListener?.invoke(it, position + 1)
+        }
+    }
+
+    fun playPrev(position: Int){
+        getPrevData(position)?.let {
+            playListener?.invoke(it, position - 1)
+        }
+    }
+
+    private fun getPrevData(currentPosition: Int): Music? {
+        val prevPosition = currentPosition - 1
+        try {
+            if(prevPosition > 0){
+                val prevData = _data[prevPosition]
+                return prevData
+            }
+            return null
+        }
+        catch (e: Exception){
+            return null
+        }
     }
 
     fun setData(data: List<Music>){
@@ -37,7 +77,7 @@ class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
         holder.bind(_data[position])
 
         holder.binding.root.setOnClickListener {
-            playListener?.invoke(_data[position])
+            playListener?.invoke(_data[position], position)
         }
     }
 
