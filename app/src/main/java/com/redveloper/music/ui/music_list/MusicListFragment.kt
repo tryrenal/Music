@@ -20,6 +20,7 @@ import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import com.redveloper.music.R
 import com.redveloper.music.databinding.FragmentMusicListBinding
 import com.redveloper.music.databinding.ItemPlayMusicLayoutBinding
+import com.redveloper.music.domain.model.Music
 import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
 import com.redveloper.music.util.isVisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,8 @@ class MusicListFragment : Fragment() {
 
     private val viewModel: MusicListViewModel by viewModels()
     private lateinit var adapter: MusicListAdapter
+
+    private var currentPosition = -1
 
     @Inject
     lateinit var exoPlayer: ExoPlayer
@@ -57,7 +60,6 @@ class MusicListFragment : Fragment() {
         adapter = MusicListAdapter()
         searchAction()
         setupExoPlayer()
-        exoListener()
 
         lifecycleScope.launch {
             viewModel.musicState
@@ -66,24 +68,29 @@ class MusicListFragment : Fragment() {
                 }
         }
 
-        adapter.setOnPlayListener { data ->
+        adapter.setOnPlayListener { data, position ->
             if (!data.music.isBlank()) {
-                binding.layoutMusicPlay.root.visibility = View.VISIBLE
-                playMusic(data.music)
+                currentPosition = position
+                updateUIMusicPlay(data)
+            }
+        }
+    }
 
-                binding.layoutMusicPlay.styledPlayer.apply {
-                    controlExoBinding.apply {
-                        tvPlay.text = data.collectionName
-                        tvBandName.text = data.artisName
+    private fun updateUIMusicPlay(data: Music){
+        binding.layoutMusicPlay.root.visibility = View.VISIBLE
+        playMusic(data.music)
+        binding.layoutMusicPlay.styledPlayer.apply {
+            controlExoBinding.apply {
+                tvPlay.text = data.collectionName
+                tvBandName.text = data.artisName
 
-                        Glide.with(controlExoBinding.root)
-                            .load(data.coverArt)
-                            .into(imgPlay)
-                    }
-                }
+                Glide.with(controlExoBinding.root)
+                    .load(data.coverArt)
+                    .into(imgPlay)
             }
         }
 
+        exoListener()
     }
 
     private fun setupExoPlayer(){
@@ -92,16 +99,9 @@ class MusicListFragment : Fragment() {
             setShowNextButton(true)
             setShowPreviousButton(true)
 
+            useController = true
             controllerAutoShow = true
             controllerHideOnTouch = false
-
-            showController()
-            setControllerVisibilityListener(object : StyledPlayerControlView.VisibilityListener{
-                override fun onVisibilityChange(visibility: Int) {
-                    if (visibility != View.VISIBLE)
-                        showController()
-                }
-            })
         }
     }
 
@@ -118,6 +118,11 @@ class MusicListFragment : Fragment() {
                     if (exoPlayer.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
                 )
             }
+
+            override fun onEvents(player: Player, events: Player.Events) {
+                super.onEvents(player, events)
+                exoListenerPrevNext()
+            }
         })
 
         controlExoBinding.exoPlay.setOnClickListener {
@@ -126,8 +131,41 @@ class MusicListFragment : Fragment() {
             else
                 exoPlayer.play()
         }
+
+        binding.layoutMusicPlay.styledPlayer.apply {
+            showController()
+            setControllerVisibilityListener(object : StyledPlayerControlView.VisibilityListener{
+                override fun onVisibilityChange(visibility: Int) {
+                    if(visibility == View.VISIBLE){
+                        showController()
+                        exoListenerPrevNext()
+                    } else {
+                        showController()
+                    }
+                }
+            })
+        }
+
+        exoListenerPrevNext()
     }
 
+    private fun exoListenerPrevNext(){
+        controlExoBinding.exoNext.apply {
+            isEnabled = true
+            alpha = 1f
+            setOnClickListener {
+                adapter.playNext(currentPosition)
+            }
+        }
+
+        controlExoBinding.exoPrev.apply {
+            isEnabled = true
+            alpha = 1f
+            setOnClickListener {
+                adapter.playPrev(currentPosition)
+            }
+        }
+    }
 
     private fun playMusic(music: String){
         exoPlayer.apply {
