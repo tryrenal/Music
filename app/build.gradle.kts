@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -69,6 +70,9 @@ dependencies {
     //exoplayer
     implementation(libs.exoplayer)
     implementation(libs.exoplayer.ui)
+
+    //firebase
+    implementation(libs.firebase.bom)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
