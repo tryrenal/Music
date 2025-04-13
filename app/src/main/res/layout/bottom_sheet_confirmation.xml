@@ -39,7 +39,7 @@
         android:fontFamily="@font/plusjakarta_semibold"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:text="Terdapat kendala pada sistem" />
+        android:text="@string/title_error" />
 
     <TextView
         android:id="@+id/tv_message"

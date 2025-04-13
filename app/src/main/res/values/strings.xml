@@ -2,4 +2,8 @@
     <string name="app_name">Music</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_error">Terdapat kendala pada sistem</string>
+    <string name="text_initial_desc">music tidak dapat menyembuhkanmu tapi musik akan selalu ada kapanpun kamu butuh</string>
+    <string name="text_initial_title">Cari Musik terbaikmu!</string>
+    <string name="search">Search Music</string>
 </resources>

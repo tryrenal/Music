@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.redveloper.music.databinding.ItemMusicLayoutBinding
 import com.redveloper.music.domain.model.Music
+import com.redveloper.music.util.textIsActive
 
 class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
 
@@ -92,6 +93,10 @@ class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
             holder.setIconToPlay()
         else
             holder.resetIcon()
+
+        holder.binding.tvTitle.textIsActive(
+            context = holder.binding.root.context,
+            active = position == selectedPosition)
 
         holder.binding.root.setOnClickListener {
             changeIconSelectedItem(position)
