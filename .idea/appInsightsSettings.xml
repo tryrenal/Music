@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.redveloper.music" />
+                  <option name="mobileSdkAppId" value="1:726629900400:android:924b19bc92c84a484294b5" />
+                  <option name="projectId" value="music-fe42c" />
+                  <option name="projectNumber" value="726629900400" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

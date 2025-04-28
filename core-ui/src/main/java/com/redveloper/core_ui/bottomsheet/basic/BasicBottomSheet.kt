@@ -1,4 +1,4 @@
-package com.redveloper.music.ui.component
+package com.redveloper.core_ui.bottomsheet.basic
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -8,17 +8,18 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
-import com.redveloper.music.R
+import com.redveloper.core_ui.bottomsheet.BaseBottomSheet
+import com.redveloper.core_ui.R as CoreR
 
-class ConfirmationBottomSheet : BaseBottomSheetFragment() {
+class BasicBottomSheet: BaseBottomSheet() {
     private lateinit var tvMessage: TextView
     private lateinit var closeButton: View
 
-    override fun layoutResource() = R.layout.bottom_sheet_confirmation
+    override fun layoutResource() = CoreR.layout.basic_bottomsheet_layout
 
     @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog, style: Int) {
-        val contentView = View.inflate(context, R.layout.bottom_sheet_confirmation, null)
+        val contentView = View.inflate(context, CoreR.layout.basic_bottomsheet_layout, null)
         dialog.setContentView(contentView)
         (contentView.parent as View).setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
     }
@@ -26,8 +27,8 @@ class ConfirmationBottomSheet : BaseBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvMessage = view.findViewById(R.id.tv_message)
-        closeButton = view.findViewById(R.id.iv_close)
+        tvMessage = view.findViewById(CoreR.id.tv_message)
+        closeButton = view.findViewById(CoreR.id.iv_close)
 
         arguments?.let {
 
@@ -50,10 +51,10 @@ class ConfirmationBottomSheet : BaseBottomSheetFragment() {
         private const val KEY_MESSAGE = "key message"
 
         @JvmOverloads
-        fun create(message:String): ConfirmationBottomSheet{
+        fun create(message:String): BasicBottomSheet{
             val bundle = Bundle()
             bundle.putString(KEY_MESSAGE, message)
-            val fragment = ConfirmationBottomSheet()
+            val fragment = BasicBottomSheet()
             fragment.arguments = bundle
 
             return fragment

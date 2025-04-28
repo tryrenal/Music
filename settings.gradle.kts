@@ -23,3 +23,4 @@ rootProject.name = "Music"
 include(":app")
 include(":data")
 include(":domain")
+include(":core-ui")
