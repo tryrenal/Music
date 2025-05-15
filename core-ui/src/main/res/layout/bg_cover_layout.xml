@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:clipChildren="false"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/cv_one"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="4dp"
+        android:rotation="40"
+        android:src="@drawable/cv_bts"
+        android:translationY="-22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/cv_two"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="76dp"
+        android:rotation="40"
+        android:src="@drawable/cv_fourtwenty"
+        android:translationX="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_one"
+        tools:ignore="ContentDescription" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cv_three"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="4dp"
+        android:rotation="40"
+        android:src="@drawable/cv_hindia"
+        android:translationX="25dp"
+        android:translationY="-25dp"
+        app:layout_constraintEnd_toStartOf="@id/cv_two"
+        app:layout_constraintTop_toBottomOf="@id/cv_one"
+        tools:ignore="ContentDescription" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cv_four"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="72dp"
+        android:rotation="40"
+        android:src="@drawable/cv_justin"
+        android:translationY="-30dp"
+        app:layout_constraintBottom_toTopOf="@id/cv_three"
+        app:layout_constraintEnd_toStartOf="@id/cv_one"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/cv_five"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="32dp"
+        android:rotation="40"
+        android:src="@drawable/cv_kendrict"
+        app:layout_constraintEnd_toStartOf="@id/cv_three"
+        app:layout_constraintTop_toBottomOf="@id/cv_four"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/cv_six"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="104dp"
+        android:rotation="40"
+        android:src="@drawable/cv_nadine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_three"
+        tools:ignore="ContentDescription" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gd_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        app:layout_constraintBottom_toBottomOf="@id/gd_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/gradient_black_cover"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="label" format="string"/>
+
+    <declare-styleable name="RedveloperButton">
+        <attr name="icon" format="reference"/>
+        <attr name="iconColor" format="color"/>
+        <attr name="btnStyle">
+            <enum name="primary" value="0"/>
+            <enum name="secondary" value="1"/>
+        </attr>
+        <attr name="label"/>
+    </declare-styleable>
+
+    <declare-styleable name="RedveloperAppBar">
+        <attr name="label"/>
+    </declare-styleable>
+
+    <declare-styleable name="RedveloperInput">
+        <attr name="inputType">
+            <enum name="email" value="0"/>
+            <enum name="text" value="1"/>
+            <enum name="password" value="2"/>
+        </attr>
+        <attr name="hint" format="string"/>
+        <attr name="label"/>
+    </declare-styleable>
+
+    <declare-styleable name="RedveloperSpinner">
+        <attr name="label"/>
+    </declare-styleable>
+
+    <declare-styleable name="RedveloperChecked">
+        <attr name="label"/>
+        <attr name="labelColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="RedveloperSearch">
+        <attr name="hintSearch" format="string"/>
+    </declare-styleable>
+</resources>
