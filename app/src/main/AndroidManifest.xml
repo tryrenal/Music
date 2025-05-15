@@ -21,6 +21,12 @@
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="com.redveloper.feature_onboarding.OnboardingActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

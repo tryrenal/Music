@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.signup_name_tnc.SignUpTncFragment">
+
+    <com.redveloper.core_ui.components.RedveloperAppBar
+        android:id="@+id/appbar"
+        app:label="Create account"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.redveloper.core_ui.components.input.RedveloperInput
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        android:id="@+id/et_name"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:label="What's your name?"
+        app:hint="This appears on your spotify profile"
+        app:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:id="@+id/line"
+        app:layout_constraintTop_toBottomOf="@id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/tv_title_tnc"
+        android:layout_marginTop="20dp"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        android:text="By tapping on Create account, you agree to the spotify Terms of Use."
+        android:textColor="@color/white"
+        android:fontFamily="@font/plusjakarta_semibold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_term_of_use"
+        android:layout_marginTop="20dp"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_tnc"
+        android:text="Terms of Use"
+        android:textColor="@color/green"
+        android:fontFamily="@font/plusjakarta_semibold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_title_privacy_policy"
+        android:layout_marginTop="20dp"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_term_of_use"
+        android:text="To learn more about how Spotify collect, uses, shares and protects your personal data, Please see the Spotify Privacy Policy."
+        android:textColor="@color/white"
+        android:fontFamily="@font/plusjakarta_semibold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_privacy_policy"
+        android:layout_marginTop="20dp"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_privacy_policy"
+        android:text="Privacy Policy"
+        android:textColor="@color/green"
+        android:fontFamily="@font/plusjakarta_semibold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.redveloper.core_ui.components.RedveloperChecked
+        android:id="@+id/checked_news"
+        android:layout_marginTop="20dp"
+        app:label="Please send me news and offers from spotify"
+        app:layout_constraintTop_toBottomOf="@id/tv_privacy_policy"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_height="wrap_content"/>
+
+    <com.redveloper.core_ui.components.RedveloperChecked
+        android:id="@+id/checked_marketing"
+        android:layout_marginTop="20dp"
+        app:label="Share my registration data with spotify content providers for marketing purposes"
+        app:layout_constraintTop_toBottomOf="@id/checked_news"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_height="wrap_content"/>
+    
+    <com.redveloper.core_ui.components.RedveloperButton
+        android:layout_marginBottom="40dp"
+        android:id="@+id/btn_create_account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:label="create an account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

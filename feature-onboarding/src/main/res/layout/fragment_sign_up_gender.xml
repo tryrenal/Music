@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.signup_gender.SignUpGenderFragment">
+
+    <com.redveloper.core_ui.components.RedveloperAppBar
+        android:id="@+id/appbar"
+        app:label="Create account"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.redveloper.core_ui.components.spinner.RedveloperSpinner
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        android:id="@+id/spinner_gender"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:label="What's your gender?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.redveloper.core_ui.components.RedveloperButton
+        android:id="@+id/btn_next"
+        app:label="Next"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_gender"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

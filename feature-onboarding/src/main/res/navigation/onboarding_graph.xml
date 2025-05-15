@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_graph"
+    app:startDestination="@id/loginFragment">
+
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.redveloper.feature_onboarding.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_to_sigup"
+            app:destination="@id/signUpEmailFragment"/>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/signUpEmailFragment"
+        android:name="com.redveloper.feature_onboarding.ui.signup_email.SignUpEmailFragment"
+        android:label="fragment_sign_up_email"
+        tools:layout="@layout/fragment_sign_up_email">
+
+        <action android:id="@+id/action_to_password"
+            app:destination="@id/signUpPasswordFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpPasswordFragment"
+        android:name="com.redveloper.feature_onboarding.ui.signup_password.SignUpPasswordFragment"
+        android:label="fragment_sign_up_password"
+        tools:layout="@layout/fragment_sign_up_password">
+
+        <action android:id="@+id/action_to_gender"
+            app:destination="@id/signUpGenderFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpGenderFragment"
+        android:name="com.redveloper.feature_onboarding.ui.signup_gender.SignUpGenderFragment"
+        android:label="fragment_sign_up_gender"
+        tools:layout="@layout/fragment_sign_up_gender">
+
+        <action android:id="@+id/action_to_tnc"
+            app:destination="@id/signUpTncFragment"/>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/signUpTncFragment"
+        android:name="com.redveloper.feature_onboarding.ui.signup_name_tnc.SignUpTncFragment"
+        android:label="fragment_sign_up_tnc"
+        tools:layout="@layout/fragment_sign_up_tnc">
+
+        <action android:id="@+id/action_to_choose_artist"
+            app:destination="@id/signUpArtistFragment"/>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/signUpArtistFragment"
+        android:name="com.redveloper.feature_onboarding.ui.signup_artist.SignUpArtistFragment"
+        android:label="fragment_sign_up_artist"
+        tools:layout="@layout/fragment_sign_up_artist">
+
+        <action android:id="@+id/action_to_choose_podcast"
+            app:destination="@id/signUpPodcastFragment"/>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/signUpPodcastFragment"
+        android:name="com.redveloper.feature_onboarding.ui.signup_podcast.SignUpPodcastFragment"
+        android:label="fragment_sign_up_podcast"
+        tools:layout="@layout/fragment_sign_up_podcast" />
+
+
+</navigation>
