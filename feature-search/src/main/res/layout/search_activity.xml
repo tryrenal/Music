@@ -6,7 +6,12 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.SearchActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/host_list_fragment"
+        android:name="com.redveloper.feature_search.ui.music_list.MusicListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

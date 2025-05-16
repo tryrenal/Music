@@ -1,4 +1,4 @@
-package com.redveloper.music.ui.music_list
+package com.redveloper.feature_search.ui.music_list
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -17,16 +17,16 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import com.redveloper.core_ui.bottomsheet.basic.BasicBottomSheet
-import com.redveloper.music.R
-import com.redveloper.music.databinding.FragmentMusicListBinding
-import com.redveloper.music.databinding.ItemPlayMusicLayoutBinding
+import com.redveloper.core_ui.utils.ext.isVisible
+import com.redveloper.feature_search.databinding.FragmentMusicListBinding
+import com.redveloper.feature_search.databinding.ItemPlayMusicLayoutBinding
+import com.redveloper.feature_search.ui.music_list.adapter.MusicListAdapter
 import com.redveloper.music.domain.model.Music
-import com.redveloper.music.ui.music_list.adapter.MusicListAdapter
-import com.redveloper.music.util.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.google.android.exoplayer2.ui.R as ExoPlayerR
+import com.redveloper.feature_search.R
 
 @AndroidEntryPoint
 class MusicListFragment : Fragment() {

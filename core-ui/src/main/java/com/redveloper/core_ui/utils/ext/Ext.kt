@@ -1,10 +1,10 @@
-package com.redveloper.music.util
+package com.redveloper.core_ui.utils.ext
 
 import android.content.Context
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.redveloper.music.R
+import com.redveloper.core_ui.R
 
 fun TextView.textIsActive(context: Context, active: Boolean){
     if(active)
@@ -13,9 +13,6 @@ fun TextView.textIsActive(context: Context, active: Boolean){
         this.setTextColor(ContextCompat.getColor(context, R.color.white))
 }
 
-fun getGroupName(name: String): String{
-    return "Song-$name"
-}
 
 fun View.isVisible(show: Boolean){
     if(show)

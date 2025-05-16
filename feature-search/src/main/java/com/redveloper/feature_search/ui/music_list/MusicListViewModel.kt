@@ -1,4 +1,4 @@
-package com.redveloper.music.ui.music_list
+package com.redveloper.feature_search.ui.music_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

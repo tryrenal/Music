@@ -1,11 +1,11 @@
-package com.redveloper.music.ui.music_list.adapter
+package com.redveloper.feature_search.ui.music_list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.redveloper.music.databinding.ItemMusicLayoutBinding
+import com.redveloper.core_ui.utils.ext.textIsActive
+import com.redveloper.feature_search.databinding.ItemMusicLayoutBinding
 import com.redveloper.music.domain.model.Music
-import com.redveloper.music.util.textIsActive
 
 class MusicListAdapter: RecyclerView.Adapter<MusicListViewHolder>() {
 
